@@ -42,6 +42,11 @@ public class buttonManager : MonoBehaviour
         standGameObj.SetActive(true);
     }
 
+    public void deactivateHitStand()
+    {
+        hitGameObj.SetActive(false);
+        standGameObj.SetActive(false);
+    }
     public void selectHit()
     {
        
@@ -55,13 +60,19 @@ public class buttonManager : MonoBehaviour
 
         hitGameObj.SetActive(false);
         standGameObj.SetActive(false);
+        gameAI.GetComponent<GameMaster>().continueRoundDealer();
     }
 
     public void activateBet()
     {
         increaseGameObj.SetActive(true);
         decreaseGameObj.SetActive(true);
+        makeBetGameObj.SetActive(true);
+        betAmountGameObj.SetActive(true);
+        confirmGameObj.SetActive(true);
     }
+
+   
 
     public void makeBet()
     {

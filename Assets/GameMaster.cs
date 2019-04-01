@@ -10,6 +10,7 @@ public class GameMaster : MonoBehaviour
     public List<GameObject> playerHand;
     public List<GameObject> dealerHand;
     public GameObject buttonMgr;
+    public GameObject ScoreMgr;
     private static Random randomized = new Random();
     public int playerHealth;
     public int dealerHealth;
@@ -17,6 +18,9 @@ public class GameMaster : MonoBehaviour
     public int currentBet;
     int playerScore = 0;
     int dealerScore = 0;
+    bool playerAce = false;
+    bool dealerAce = false;
+    List<GameObject> placedObjects;
 
     void Start()
     {
@@ -82,13 +86,28 @@ public class GameMaster : MonoBehaviour
         givePlayerCard();
         Invoke("displayPlayerCard", 0.3f);
         Invoke("askHitStand", .8f);
+        calculateNewScore("player");
     }
 
 
     public void continueRoundDealer()
     {
+       
+        if (dealerScore < 17)
+        {
+            giveDealerCard();
+            calculateNewScore("dealer");
+            Invoke("displayDealerCard", 0.3f);
+            
+            Invoke("continueRoundDealer", 0.5f);
+        }
+        else
+        {
+            Invoke("checkWinLose", 1f);
+        }
+    }
 
-    } 
+  
     public void givePlayerCard()
     {
         GameObject tempCard = cardDeck[cardDeck.Count - 1];
@@ -106,14 +125,17 @@ public class GameMaster : MonoBehaviour
 
     public void displayPlayerCard()
     {
+
         int moveFactor = playerHand.Count * 100;
         Instantiate(playerHand[playerHand.Count - 1], new Vector2(261 + moveFactor, 119), Quaternion.identity);
     }
 
     public void displayDealerCard()
     {
-        int moveFactor = playerHand.Count * 100;
+
+        int moveFactor = dealerHand.Count * 100;
         Instantiate(dealerHand[dealerHand.Count - 1], new Vector2(261 + moveFactor, 290), Quaternion.identity);
+
     }
 
     public void calculateScore()
@@ -123,8 +145,8 @@ public class GameMaster : MonoBehaviour
         int tempScore1 = 0;
         int tempScore2 = 0;
 
-        bool playerAce = false;
-        bool dealerAce = false;
+        playerAce = false;
+        dealerAce = false;
         for (int i = 0; i < playerHand.Count; i++)
         {
             if (playerHand[i].GetComponent<CardData>().getAce())
@@ -185,13 +207,93 @@ public class GameMaster : MonoBehaviour
         }
         if (playerScore == 21 && dealerScore != 21)
         {
+            buttonMgr.GetComponent<buttonManager>().deactivateHitStand();
             playerWins();
         }
         if (playerScore != 21 && dealerScore == 21)
         {
+            buttonMgr.GetComponent<buttonManager>().deactivateHitStand();
             dealerWins();
         }
         if (playerScore == 21 && dealerScore == 21)
+        {
+            buttonMgr.GetComponent<buttonManager>().deactivateHitStand();
+            staleMate();
+        }
+
+    }
+
+    public void calculateNewScore(string choice)
+    {
+        bool newAce = false;
+        if(choice == "player")
+        {
+            if (playerHand[playerHand.Count-1].GetComponent<CardData>().getAce())
+            {
+                newAce = true;
+            }
+            if(newAce)
+            {
+                playerScore = calulateAceScore(playerScore + 1, playerScore + 11);
+            }
+            else
+            {
+                playerScore += playerHand[playerHand.Count-1].GetComponent<CardData>().getValue();
+            }
+        }
+        if (choice == "dealer")
+        {
+            if (dealerHand[dealerHand.Count-1].GetComponent<CardData>().getAce())
+            {
+                newAce = true;
+            }
+            if (newAce)
+            {
+                dealerScore = calulateAceScore(dealerScore + 1, dealerScore + 11);
+            }
+            else
+            {
+                dealerScore += dealerHand[dealerHand.Count-1].GetComponent<CardData>().getValue();
+            }
+        }
+
+    }
+
+    public void checkWinLose()
+    {
+        if (playerScore == 21 && dealerScore != 21)
+        {
+            playerWins();
+        }
+        else if (playerScore != 21 && dealerScore == 21)
+        {
+            dealerWins();
+        }
+        else if (playerScore == 21 && dealerScore == 21)
+        {
+            staleMate();
+        }
+        else if (playerScore > 21 && dealerScore < 21)
+        {
+            dealerWins();
+        }
+        else if (playerScore < 21 && dealerScore > 21)
+        {
+            playerWins();
+        }
+        else if (playerScore > 21 && dealerScore > 21)
+        {
+            staleMate();
+        }
+        else if(playerScore > dealerScore)
+        {
+            playerWins();
+        }
+        else if(dealerScore > playerScore)
+        {
+            dealerWins();
+        }
+        else if(playerScore == dealerScore)
         {
             staleMate();
         }
@@ -199,22 +301,26 @@ public class GameMaster : MonoBehaviour
     }
     public void playerWins()
     {
-
+        ScoreMgr.GetComponent<scoreManager>().turnOnWinLose(true);
+        playerLoot += currentBet + currentBet;
+        Invoke("resetDeck", 2f);
     }
 
     public void dealerWins()
     {
-
+        ScoreMgr.GetComponent<scoreManager>().turnOnWinLose(false);
+        Invoke("resetDeck", 2f);
     }
 
     public void staleMate()
     {
-
+        playerLoot += currentBet;
+        resetDeck();
     }
 
     public void increaseBet()
     {
-        if(currentBet+5 < playerLoot)
+        if (currentBet + 5 < playerLoot)
         {
             currentBet += 5;
         }
@@ -222,7 +328,7 @@ public class GameMaster : MonoBehaviour
 
     public void decreaseBet()
     {
-        if(currentBet>5)
+        if (currentBet > 5)
         {
             currentBet -= 5;
         }
@@ -261,6 +367,43 @@ public class GameMaster : MonoBehaviour
         buttonMgr.GetComponent<buttonManager>().activateHitStand();
     }
 
+    public void resetDeck()
+    {
+        buttonMgr.GetComponent<buttonManager>().deactivateHitStand();
+    
+        GameObject[] tempObjects;
+        GameObject tempCard;
+        playerScore = 0;
+        dealerScore = 0;
+        string[] suits = { "Diamonds", "Clubs", "Hearts", "Spades" };
+        
+        for (int i=0; i<= playerHand.Count; i++)
+        {
+            tempCard = playerHand[0];
+            cardDeck.Add(tempCard);
+            playerHand.RemoveAt(0);
+        }
+        for (int i = 0; i <= dealerHand.Count; i++)
+        {
+            tempCard = dealerHand[0];
+            cardDeck.Add(tempCard);
+            dealerHand.RemoveAt(0);
+        }
+        
+        for(int i =0;i<4;i++)
+        {
+            tempObjects = GameObject.FindGameObjectsWithTag(suits[i]);
+            for(int j =0;j<tempObjects.Length;j++)
+            {
+                Destroy(tempObjects[j]);
+            }
+        }
+
+        currentBet = 5;
+        buttonMgr.GetComponent<buttonManager>().activateBet();
+
+    }
+
     public int getPlayerScore()
     {
         return playerScore;
@@ -289,4 +432,5 @@ public class GameMaster : MonoBehaviour
     {
         return currentBet;
     }
+
 }

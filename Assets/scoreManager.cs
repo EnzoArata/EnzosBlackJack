@@ -13,6 +13,8 @@ public class scoreManager : MonoBehaviour
     public Text dealerHealth;
     public Text playerBet;
     public Text playerSpentBet;
+    public Text winLose;
+    public GameObject winLoseObj;
     [SerializeField] GameObject gameAI;
 
     // Start is called before the first frame update
@@ -22,9 +24,10 @@ public class scoreManager : MonoBehaviour
         dealerScore.text = "Dealer's Hand Score : " + gameAI.GetComponent<GameMaster>().getDealerScore();
         playerHealth.text = "Player's Health is : " + gameAI.GetComponent<GameMaster>().getPlayerHealth();
         dealerHealth.text = "Dealer's Health is : " + gameAI.GetComponent<GameMaster>().getDealerHealth();
-        playerScore.text = "Player's Loot : " + gameAI.GetComponent<GameMaster>().getPlayerLoot();
+        playerLoot.text = "Player's Loot : " + gameAI.GetComponent<GameMaster>().getPlayerLoot();
         playerBet.text = ":" + gameAI.GetComponent<GameMaster>().getCurrentBet() + ":";
         playerSpentBet.text = "Player Bet : " + gameAI.GetComponent<GameMaster>().getCurrentBet();
+        winLoseObj.SetActive(false);
     }
 
     // Update is called once per frame
@@ -34,10 +37,29 @@ public class scoreManager : MonoBehaviour
         dealerScore.text = "Dealer's Hand Score : " + gameAI.GetComponent<GameMaster>().getDealerScore();
         playerHealth.text = "Player's Health is : " + gameAI.GetComponent<GameMaster>().getPlayerHealth();
         dealerHealth.text = "Dealer's Health is : " + gameAI.GetComponent<GameMaster>().getDealerHealth();
-        playerScore.text = "Player's Loot : " + gameAI.GetComponent<GameMaster>().getPlayerLoot();
+        playerLoot.text = "Player's Loot : " + gameAI.GetComponent<GameMaster>().getPlayerLoot();
         playerBet.text = ":" + gameAI.GetComponent<GameMaster>().getCurrentBet() + ":";
         playerSpentBet.text = "Player Bet : " + gameAI.GetComponent<GameMaster>().getCurrentBet();
     }
 
-    
+    public void turnOnWinLose(bool win)
+    {
+        if(win)
+        {
+            winLoseObj.SetActive(true);
+            winLose.text = "You won the Round!!!";
+        }
+        else
+        {
+            winLoseObj.SetActive(true);
+            winLose.text = "You lost the Round!!!";
+        }
+        Invoke("turnOffWinLose", 2f);
+    }
+
+    public void turnOffWinLose()
+    {
+        winLoseObj.SetActive(false);
+    }
+
 }
