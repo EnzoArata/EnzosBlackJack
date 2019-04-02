@@ -42,17 +42,22 @@ public class scoreManager : MonoBehaviour
         playerSpentBet.text = "Player Bet : " + gameAI.GetComponent<GameMaster>().getCurrentBet();
     }
 
-    public void turnOnWinLose(bool win)
+    public void turnOnWinLose(int win)
     {
-        if(win)
+        if(win == 0)
         {
             winLoseObj.SetActive(true);
             winLose.text = "You won the Round!!!";
         }
-        else
+        else if(win == 1)
         {
             winLoseObj.SetActive(true);
             winLose.text = "You lost the Round!!!";
+        }
+        else if(win ==2)
+        {
+            winLoseObj.SetActive(true);
+            winLose.text = "Stalemate!!!";
         }
         Invoke("turnOffWinLose", 2f);
     }

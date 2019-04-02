@@ -2241,6 +2241,8 @@ MonoBehaviour:
   dealerHand: []
   buttonMgr: {fileID: 1315643956}
   ScoreMgr: {fileID: 1315643956}
+  cardBack: {fileID: 5415540394949767926, guid: 901bd3d19bfeba449bc31c00935b3dc6,
+    type: 3}
   playerHealth: 0
   dealerHealth: 0
   playerLoot: 0
