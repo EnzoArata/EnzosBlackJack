@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class scoreManager : MonoBehaviour
 {
     public Text playerScore;
-    public Text dealerScore;
+    
     public Text playerLoot;
     public Text playerHealth;
-    public Text dealerHealth;
+    public Slider healthBar;
     public Text playerBet;
     public Text playerSpentBet;
     public Text winLose;
@@ -21,9 +21,9 @@ public class scoreManager : MonoBehaviour
     void Start()
     {
         playerScore.text = "Player's Hand Score : " + gameAI.GetComponent<GameMaster>().getPlayerScore();
-        dealerScore.text = "Dealer's Hand Score : " + gameAI.GetComponent<GameMaster>().getDealerScore();
+        healthBar.value = gameAI.GetComponent<GameMaster>().getDealerHealth()/100f;
         playerHealth.text = "Player's Health is : " + gameAI.GetComponent<GameMaster>().getPlayerHealth();
-        dealerHealth.text = "Dealer's Health is : " + gameAI.GetComponent<GameMaster>().getDealerHealth();
+      
         playerLoot.text = "Player's Loot : " + gameAI.GetComponent<GameMaster>().getPlayerLoot();
         playerBet.text = ":" + gameAI.GetComponent<GameMaster>().getCurrentBet() + ":";
         playerSpentBet.text = "Player Bet : " + gameAI.GetComponent<GameMaster>().getCurrentBet();
@@ -34,9 +34,9 @@ public class scoreManager : MonoBehaviour
     void Update()
     {
         playerScore.text = "Player's Hand Score : " + gameAI.GetComponent<GameMaster>().getPlayerScore();
-        dealerScore.text = "Dealer's Hand Score : " + gameAI.GetComponent<GameMaster>().getDealerScore();
+        healthBar.value = gameAI.GetComponent<GameMaster>().getDealerHealth() / 100f;
         playerHealth.text = "Player's Health is : " + gameAI.GetComponent<GameMaster>().getPlayerHealth();
-        dealerHealth.text = "Dealer's Health is : " + gameAI.GetComponent<GameMaster>().getDealerHealth();
+       
         playerLoot.text = "Player's Loot : " + gameAI.GetComponent<GameMaster>().getPlayerLoot();
         playerBet.text = ":" + gameAI.GetComponent<GameMaster>().getCurrentBet() + ":";
         playerSpentBet.text = "Player Bet : " + gameAI.GetComponent<GameMaster>().getCurrentBet();

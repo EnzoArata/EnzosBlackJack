@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameMaster : MonoBehaviour
 {
@@ -34,10 +35,7 @@ public class GameMaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("1"))
-        {
-            startRound();
-        }
+       
 
     }
 
@@ -330,14 +328,60 @@ public class GameMaster : MonoBehaviour
             staleMate();
         }
 
+
+        if (dealerHealth <= 0)
+        {
+            //Go to win Screen
+            SceneManager.LoadScene("WinScreen");
+        }
+        if (playerLoot <= 0)
+        {
+            SceneManager.LoadScene("LoseScreen");
+            //Go to lose Screen
+        }
     }
     public void playerWins()
     {
         ScoreMgr.GetComponent<scoreManager>().turnOnWinLose(0);
         playerLoot += currentBet + currentBet;
+        dealerHealth -= calculateDmg();
         Invoke("resetDeck", 2f);
     }
 
+    public int calculateDmg()
+    {
+        int damage = 0;
+        if(currentBet < 20)
+        {
+            damage = 5;
+        }
+        else if(currentBet > 20 && currentBet < 40)
+        {
+            damage = 10;
+        }
+        else if (currentBet > 40 && currentBet < 60)
+        {
+            damage = 20;
+        }
+        else if (currentBet > 60 && currentBet < 80)
+        {
+            damage = 30;
+        }
+        else if (currentBet > 80 && currentBet < 90)
+        {
+            damage = 40;
+        }
+        else if (currentBet > 90 && currentBet < 100)
+        {
+            damage = 50;
+        }
+        else if (currentBet >= 100 )
+        {
+            damage = 100;
+        }
+
+        return damage;
+    }
     public void dealerWins()
     {
         ScoreMgr.GetComponent<scoreManager>().turnOnWinLose(1);
@@ -353,7 +397,7 @@ public class GameMaster : MonoBehaviour
 
     public void increaseBet()
     {
-        if (currentBet + 5 < playerLoot)
+        if (currentBet + 5 <= playerLoot)
         {
             currentBet += 5;
         }
@@ -443,6 +487,16 @@ public class GameMaster : MonoBehaviour
 
         currentBet = 5;
         buttonMgr.GetComponent<buttonManager>().activateBet();
+        if (dealerHealth <= 0)
+        {
+            //Go to win Screen
+            SceneManager.LoadScene("WinScreen");
+        }
+        if (playerLoot <= 0)
+        {
+            SceneManager.LoadScene("LoseScreen");
+            //Go to lose Screen
+        }
 
     }
 

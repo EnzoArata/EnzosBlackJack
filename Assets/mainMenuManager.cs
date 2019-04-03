@@ -33,7 +33,7 @@ public class mainMenuManager : MonoBehaviour
     public void selectPlay()
     {
         SceneManager.LoadScene("BlackJackGame");
-        print("button Pressed");
+        
     }
 
     public void selectRules()

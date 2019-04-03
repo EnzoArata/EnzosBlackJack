@@ -64,9 +64,11 @@
     <Compile Include="Assets\CardData.cs" />
     <Compile Include="Assets\DealerAI.cs" />
     <Compile Include="Assets\GameMaster.cs" />
+    <Compile Include="Assets\LoseScreen.cs" />
     <Compile Include="Assets\mainMenuManager.cs" />
     <Compile Include="Assets\PlayerController.cs" />
     <Compile Include="Assets\scoreManager.cs" />
+    <Compile Include="Assets\WinScreen.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Repos/GitHub/EnzosBlackJack/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
