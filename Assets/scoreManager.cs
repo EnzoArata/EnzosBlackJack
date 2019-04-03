@@ -47,17 +47,17 @@ public class scoreManager : MonoBehaviour
         if(win == 0)
         {
             winLoseObj.SetActive(true);
-            winLose.text = "You won the Round!!!";
+            winLose.text = "You won the Round!!! \n You have gained " + gameAI.GetComponent<GameMaster>().getCurrentBet() + " coins" ;
         }
         else if(win == 1)
         {
             winLoseObj.SetActive(true);
-            winLose.text = "You lost the Round!!!";
+            winLose.text = "You lost the Round!!! \n You have lost " + gameAI.GetComponent<GameMaster>().getCurrentBet() + " coins";
         }
         else if(win ==2)
         {
             winLoseObj.SetActive(true);
-            winLose.text = "Stalemate!!!";
+            winLose.text = "Stalemate!!! \n No gain or loss";
         }
         Invoke("turnOffWinLose", 2f);
     }

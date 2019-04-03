@@ -64,6 +64,7 @@
     <Compile Include="Assets\CardData.cs" />
     <Compile Include="Assets\DealerAI.cs" />
     <Compile Include="Assets\GameMaster.cs" />
+    <Compile Include="Assets\mainMenuManager.cs" />
     <Compile Include="Assets\PlayerController.cs" />
     <Compile Include="Assets\scoreManager.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">

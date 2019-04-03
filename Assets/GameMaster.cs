@@ -85,11 +85,12 @@ public class GameMaster : MonoBehaviour
     public void continueRoundPlayer()
     {
         givePlayerCard();
-        Invoke("displayPlayerCard", 0.3f);
+        Invoke("displayPlayerCard", 0.2f);
         
         calculateNewScore("player");
         if (playerScore > 21)
         {
+            Invoke("revealDealerHand", 0.4f);
             Invoke("dealerWins", 0.5f);
         }
         else if (playerScore == 21)
@@ -105,7 +106,7 @@ public class GameMaster : MonoBehaviour
 
     public void continueRoundDealer()
     {
-       
+        revealDealerHand();
         if (dealerScore < 17)
         {
             giveDealerCard();
@@ -148,16 +149,31 @@ public class GameMaster : MonoBehaviour
 
         int moveFactor = dealerHand.Count * 100;
         
-        //else
-        //{
-            Instantiate(dealerHand[dealerHand.Count - 1], new Vector2(261 + moveFactor, 290), Quaternion.identity);
-        // }
-        if (dealerHand.Count > 1)
+        
+        Instantiate(dealerHand[dealerHand.Count - 1], new Vector2(261 + moveFactor, 290), Quaternion.identity);
+
+        
+        if (dealerHand.Count == 2)
         {
             Instantiate(cardBack, new Vector3(261 + moveFactor, 260, -3), Quaternion.identity);
         }
 
     }
+    /*
+    public void moveCard(GameObject objectToMove, Vector3 destination)
+    {
+        Vector3 tempPosition = objectToMove.transform.position;
+        
+        if (objectToMove.transform.position.x > destination.x)
+        {
+            tempPosition.x = objectToMove.transform.position.x - 10;
+            objectToMove.transform.position = tempPosition;
+            cardMoveWait();
+            moveCard(objectToMove, destination);
+        }
+    }*/
+
+      
 
     public void calculateScore()
     {
@@ -384,6 +400,15 @@ public class GameMaster : MonoBehaviour
         buttonMgr.GetComponent<buttonManager>().activateHitStand();
     }
 
+    public void revealDealerHand()
+    {
+        GameObject[]  tempObjects = GameObject.FindGameObjectsWithTag("CardBack");
+        for (int j = 0; j < tempObjects.Length; j++)
+        {
+            Destroy(tempObjects[j]);
+        }
+    }
+
     public void resetDeck()
     {
         buttonMgr.GetComponent<buttonManager>().deactivateHitStand();
@@ -392,7 +417,7 @@ public class GameMaster : MonoBehaviour
         GameObject tempCard;
         playerScore = 0;
         dealerScore = 0;
-        string[] suits = { "Diamonds", "Clubs", "Hearts", "Spades" };
+        string[] suits = { "Diamonds", "Clubs", "Hearts", "Spades" , "CardBack"};
         
         for (int i= playerHand.Count-1; i>= 0; i--)
         {
@@ -407,7 +432,7 @@ public class GameMaster : MonoBehaviour
             dealerHand.RemoveAt(i);
         }
 
-        for (int i =0;i<4;i++)
+        for (int i =0;i<5;i++)
         {
             tempObjects = GameObject.FindGameObjectsWithTag(suits[i]);
             for(int j =0;j<tempObjects.Length;j++)

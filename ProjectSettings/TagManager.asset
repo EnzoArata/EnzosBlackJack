@@ -8,6 +8,7 @@ TagManager:
   - Spades
   - Clubs
   - Diamonds
+  - CardBack
   layers:
   - Default
   - TransparentFX
