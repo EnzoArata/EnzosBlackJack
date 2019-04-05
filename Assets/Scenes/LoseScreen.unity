@@ -182,7 +182,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: You Lost.......
+  m_Text: "You have no loot left....\n\tYou Lose"
 --- !u!222 &26775104
 CanvasRenderer:
   m_ObjectHideFlags: 0

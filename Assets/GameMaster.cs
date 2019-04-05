@@ -23,6 +23,7 @@ public class GameMaster : MonoBehaviour
     bool playerAce = false;
     bool dealerAce = false;
     List<GameObject> placedObjects;
+    bool waitNext = false;
 
     void Start()
     {
@@ -139,7 +140,7 @@ public class GameMaster : MonoBehaviour
     {
 
         int moveFactor = playerHand.Count * 100;
-        Instantiate(playerHand[playerHand.Count - 1], new Vector2(261 + moveFactor, 119), Quaternion.identity);
+        Instantiate(playerHand[playerHand.Count - 1], new Vector2(200 + moveFactor, 119), Quaternion.identity);
     }
 
     public void displayDealerCard()
@@ -148,12 +149,12 @@ public class GameMaster : MonoBehaviour
         int moveFactor = dealerHand.Count * 100;
         
         
-        Instantiate(dealerHand[dealerHand.Count - 1], new Vector2(261 + moveFactor, 290), Quaternion.identity);
+        Instantiate(dealerHand[dealerHand.Count - 1], new Vector2(200 + moveFactor, 290), Quaternion.identity);
 
         
         if (dealerHand.Count == 2)
         {
-            Instantiate(cardBack, new Vector3(261 + moveFactor, 260, -3), Quaternion.identity);
+            Instantiate(cardBack, new Vector3(200 + moveFactor, 290, -3), Quaternion.identity);
         }
 
     }
@@ -343,9 +344,33 @@ public class GameMaster : MonoBehaviour
     public void playerWins()
     {
         ScoreMgr.GetComponent<scoreManager>().turnOnWinLose(0);
+        buttonMgr.GetComponent<buttonManager>().activateNextRound();
         playerLoot += currentBet + currentBet;
         dealerHealth -= calculateDmg();
-        Invoke("resetDeck", 2f);
+     
+        
+    }
+
+    public void dealerWins()
+    {
+        ScoreMgr.GetComponent<scoreManager>().turnOnWinLose(1);
+        buttonMgr.GetComponent<buttonManager>().activateNextRound();
+        
+       
+    }
+
+    public void staleMate()
+    {
+        ScoreMgr.GetComponent<scoreManager>().turnOnWinLose(2);
+        buttonMgr.GetComponent<buttonManager>().activateNextRound();
+        playerLoot += currentBet;
+      
+       
+    }
+
+    public void nextRoundButton()
+    {
+        resetDeck();
     }
 
     public int calculateDmg()
@@ -382,18 +407,7 @@ public class GameMaster : MonoBehaviour
 
         return damage;
     }
-    public void dealerWins()
-    {
-        ScoreMgr.GetComponent<scoreManager>().turnOnWinLose(1);
-        Invoke("resetDeck", 2f);
-    }
-
-    public void staleMate()
-    {
-        ScoreMgr.GetComponent<scoreManager>().turnOnWinLose(2);
-        playerLoot += currentBet;
-        resetDeck();
-    }
+   
 
     public void increaseBet()
     {

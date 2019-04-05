@@ -229,7 +229,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: You Win!!!!
+  m_Text: "You have defeated the dealer....\n\tYou Win!!"
 --- !u!222 &152372348
 CanvasRenderer:
   m_ObjectHideFlags: 0

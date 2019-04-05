@@ -15,19 +15,23 @@ public class buttonManager : MonoBehaviour
     public GameObject makeBetGameObj;
     public GameObject betAmountGameObj;
     public GameObject confirmGameObj;
+    public GameObject nextRoundGameObj;
     public Button increaseButton;
     public Button decreaseButton;
     public Button confirmButton;
+    public Button nextRoundButton;
 
     void Start()
     {
         hitGameObj.SetActive(false);
         standGameObj.SetActive(false);
+        nextRoundGameObj.SetActive(false);
         hitButton.onClick.AddListener(selectHit);
         standButton.onClick.AddListener(selectStand);
         increaseButton.onClick.AddListener(increaseBet);
         decreaseButton.onClick.AddListener(decreaseBet);
         confirmButton.onClick.AddListener(makeBet);
+        nextRoundButton.onClick.AddListener(selectNextRound);
     }
 
     // Update is called once per frame
@@ -93,6 +97,22 @@ public class buttonManager : MonoBehaviour
     public void decreaseBet()
     {
         gameAI.GetComponent<GameMaster>().decreaseBet();
+    }
+
+    public void activateNextRound()
+    {
+        nextRoundGameObj.SetActive(true);
+    }
+
+    public void deactivateNextRound()
+    {
+        nextRoundGameObj.SetActive(false);
+    }
+
+    public void selectNextRound()
+    {
+        gameAI.GetComponent<GameMaster>().nextRoundButton();
+        deactivateNextRound();
     }
 }
 
