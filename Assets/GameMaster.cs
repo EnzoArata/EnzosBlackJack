@@ -347,8 +347,8 @@ public class GameMaster : MonoBehaviour
         buttonMgr.GetComponent<buttonManager>().activateNextRound();
         playerLoot += currentBet + currentBet;
         dealerHealth -= calculateDmg();
-     
-        
+        buttonMgr.GetComponent<buttonManager>().activateDamageDealt();
+
     }
 
     public void dealerWins()

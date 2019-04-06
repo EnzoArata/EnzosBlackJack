@@ -59,7 +59,7 @@ public class scoreManager : MonoBehaviour
             winLoseObj.SetActive(true);
             winLose.text = "Stalemate!!! \nNo gain or loss";
         }
-        Invoke("turnOffWinLose", 5f);
+        
     }
 
     public void turnOffWinLose()

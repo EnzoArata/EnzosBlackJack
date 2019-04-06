@@ -20,12 +20,15 @@ public class buttonManager : MonoBehaviour
     public Button decreaseButton;
     public Button confirmButton;
     public Button nextRoundButton;
+    public Text damageDealt;
+    public GameObject damageObj;
 
     void Start()
     {
         hitGameObj.SetActive(false);
         standGameObj.SetActive(false);
         nextRoundGameObj.SetActive(false);
+        damageObj.SetActive(false);
         hitButton.onClick.AddListener(selectHit);
         standButton.onClick.AddListener(selectStand);
         increaseButton.onClick.AddListener(increaseBet);
@@ -76,6 +79,12 @@ public class buttonManager : MonoBehaviour
         confirmGameObj.SetActive(true);
     }
 
+    public void activateDamageDealt()
+    {
+        damageObj.SetActive(true);
+        damageDealt.text = "!!!" + gameAI.GetComponent<GameMaster>().calculateDmg() + " Damage!!!";
+    }
+
    
 
     public void makeBet()
@@ -102,6 +111,7 @@ public class buttonManager : MonoBehaviour
     public void activateNextRound()
     {
         nextRoundGameObj.SetActive(true);
+        
     }
 
     public void deactivateNextRound()
@@ -112,7 +122,10 @@ public class buttonManager : MonoBehaviour
     public void selectNextRound()
     {
         gameAI.GetComponent<GameMaster>().nextRoundButton();
+        damageObj.SetActive(false);
         deactivateNextRound();
+        gameAI.GetComponent<GameMaster>().ScoreMgr.GetComponent<scoreManager>().turnOffWinLose();
+        
     }
 }
 
