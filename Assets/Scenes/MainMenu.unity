@@ -408,7 +408,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -82}
+  m_AnchoredPosition: {x: 0, y: 6}
   m_SizeDelta: {x: 1714.5, y: 531}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &422034690
@@ -853,22 +853,9 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'My twist for Black Jack is to make this
 
-    card game into a battle. The game will
+    card game into a battle where the goal
 
-    conclude when you defeat the dealer
-
-    by draining his health bar or when you
-
-    run out of loot.
-
-
-    When you win a round of black jack you
-
-    will damage the dealer. This damage
-
-    increases exponentially the larger your
-
-    bet wagered.'
+    is to defeat the dealer.'
 --- !u!222 &1045490130
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -893,7 +880,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -197, y: -4}
+  m_AnchoredPosition: {x: -197, y: -22}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1052606863 stripped
