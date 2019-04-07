@@ -12,6 +12,7 @@ public class GameMaster : MonoBehaviour
     public List<GameObject> dealerHand;
     public GameObject buttonMgr;
     public GameObject ScoreMgr;
+    public GameObject cameraMgr;
     public GameObject cardBack;
     private static Random randomized = new Random();
     public int playerHealth;
@@ -352,6 +353,7 @@ public class GameMaster : MonoBehaviour
         buttonMgr.GetComponent<buttonManager>().activateNextRound();
         playerLoot += currentBet + currentBet;
         dealerHealth -= calculateDmg();
+        cameraMgr.GetComponent<cameraShaker>().startShake(1f, calculateDmg());
         buttonMgr.GetComponent<buttonManager>().activateDamageDealt();
 
     }
