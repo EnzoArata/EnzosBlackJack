@@ -140,7 +140,7 @@ public class GameMaster : MonoBehaviour
     {
 
         int moveFactor = playerHand.Count * 100;
-        Instantiate(playerHand[playerHand.Count - 1], new Vector2(200 + moveFactor, 119), Quaternion.identity);
+        Instantiate(playerHand[playerHand.Count - 1], new Vector2(100 + moveFactor, 75), Quaternion.identity);
     }
 
     public void displayDealerCard()
@@ -149,12 +149,12 @@ public class GameMaster : MonoBehaviour
         int moveFactor = dealerHand.Count * 100;
         
         
-        Instantiate(dealerHand[dealerHand.Count - 1], new Vector2(200 + moveFactor, 290), Quaternion.identity);
+        Instantiate(dealerHand[dealerHand.Count - 1], new Vector2(100 + moveFactor, 290), Quaternion.identity);
 
         
         if (dealerHand.Count == 2)
         {
-            Instantiate(cardBack, new Vector3(200 + moveFactor, 290, -3), Quaternion.identity);
+            Instantiate(cardBack, new Vector3(100 + moveFactor, 290, -3), Quaternion.identity);
         }
 
     }
@@ -245,6 +245,11 @@ public class GameMaster : MonoBehaviour
         {
             buttonMgr.GetComponent<buttonManager>().deactivateHitStand();
             playerWins();
+        }
+        if (playerScore != 21 && dealerScore == 21)
+        {
+            buttonMgr.GetComponent<buttonManager>().deactivateHitStand();
+            dealerWins();
         }
         if (playerScore == 21 && dealerScore == 21)
         {
@@ -492,6 +497,7 @@ public class GameMaster : MonoBehaviour
 
         for (int i =0;i<5;i++)
         {
+            tempObjects = GameObject.FindGameObjectsWithTag(suits[i]);
             tempObjects = GameObject.FindGameObjectsWithTag(suits[i]);
             for(int j =0;j<tempObjects.Length;j++)
             {

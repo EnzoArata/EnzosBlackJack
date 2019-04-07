@@ -22,9 +22,11 @@ public class buttonManager : MonoBehaviour
     public Button nextRoundButton;
     public Text damageDealt;
     public GameObject damageObj;
+    public GameObject playerScoreObj;
 
     void Start()
     {
+        playerScoreObj.SetActive(false);
         hitGameObj.SetActive(false);
         standGameObj.SetActive(false);
         nextRoundGameObj.SetActive(false);
@@ -47,6 +49,7 @@ public class buttonManager : MonoBehaviour
     {
         hitGameObj.SetActive(true);
         standGameObj.SetActive(true);
+        playerScoreObj.SetActive(true);
     }
 
     public void deactivateHitStand()
@@ -82,7 +85,7 @@ public class buttonManager : MonoBehaviour
     public void activateDamageDealt()
     {
         damageObj.SetActive(true);
-        damageDealt.text = "!!!" + gameAI.GetComponent<GameMaster>().calculateDmg() + " Damage!!!";
+        damageDealt.text = gameAI.GetComponent<GameMaster>().calculateDmg() + " Damage!!!";
     }
 
    
@@ -121,6 +124,7 @@ public class buttonManager : MonoBehaviour
 
     public void selectNextRound()
     {
+        playerScoreObj.SetActive(false);
         gameAI.GetComponent<GameMaster>().nextRoundButton();
         damageObj.SetActive(false);
         deactivateNextRound();

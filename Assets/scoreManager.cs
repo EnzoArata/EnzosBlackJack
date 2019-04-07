@@ -15,6 +15,7 @@ public class scoreManager : MonoBehaviour
     public Text playerSpentBet;
     public Text winLose;
     public GameObject winLoseObj;
+    
     [SerializeField] GameObject gameAI;
 
     // Start is called before the first frame update
@@ -38,7 +39,7 @@ public class scoreManager : MonoBehaviour
         playerHealth.text = "Player's Health is : " + gameAI.GetComponent<GameMaster>().getPlayerHealth();
        
         playerLoot.text = "Player's Loot : " + gameAI.GetComponent<GameMaster>().getPlayerLoot();
-        playerBet.text = ":" + gameAI.GetComponent<GameMaster>().getCurrentBet() + ":";
+        playerBet.text = " " + gameAI.GetComponent<GameMaster>().getCurrentBet();
         playerSpentBet.text = "Player Bet : " + gameAI.GetComponent<GameMaster>().getCurrentBet();
     }
 
