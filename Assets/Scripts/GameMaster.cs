@@ -78,7 +78,7 @@ public class GameMaster : MonoBehaviour
 
         Invoke("calculateScore", 1f);
 
-        Invoke("askHitStand", 1.5f);
+        Invoke("askHitStand", 1f);
 
     }
 
@@ -349,6 +349,7 @@ public class GameMaster : MonoBehaviour
     }
     public void playerWins()
     {
+        buttonMgr.GetComponent<buttonManager>().deactivateHitStand();
         ScoreMgr.GetComponent<scoreManager>().turnOnWinLose(0);
         buttonMgr.GetComponent<buttonManager>().activateNextRound();
         playerLoot += currentBet + currentBet;
@@ -360,6 +361,7 @@ public class GameMaster : MonoBehaviour
 
     public void dealerWins()
     {
+        buttonMgr.GetComponent<buttonManager>().deactivateHitStand();
         ScoreMgr.GetComponent<scoreManager>().turnOnWinLose(1);
         buttonMgr.GetComponent<buttonManager>().activateNextRound();
         
@@ -368,6 +370,7 @@ public class GameMaster : MonoBehaviour
 
     public void staleMate()
     {
+        buttonMgr.GetComponent<buttonManager>().deactivateHitStand();
         ScoreMgr.GetComponent<scoreManager>().turnOnWinLose(2);
         buttonMgr.GetComponent<buttonManager>().activateNextRound();
         playerLoot += currentBet;
